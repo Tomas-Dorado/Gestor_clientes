@@ -1,0 +1,1 @@
+#Este fichero es el que tendra funciones auxiliares
