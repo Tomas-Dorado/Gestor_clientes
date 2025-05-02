@@ -1,6 +1,7 @@
 import copy
 import unittest
 import database as db
+from Clientes import Clientes, Cliente
 
 class Testdatabase(unittest.TestCase):
     def setUp(self):
