@@ -35,7 +35,7 @@ class Clientes:
             
     @staticmethod
     def borrar(dni):
-        for i, cliente in enumerate(Cliente.lista_clientes):
+        for i, cliente in enumerate(Clientes.lista_clientes):
             if cliente.dni == dni:
                 cliente = Cliente.lista_clientes.pop(i)
                 return cliente
