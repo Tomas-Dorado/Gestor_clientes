@@ -37,5 +37,5 @@ class Clientes:
     def borrar(dni):
         for i, cliente in enumerate(Clientes.lista_clientes):
             if cliente.dni == dni:
-                cliente = Cliente.lista_clientes.pop(i)
+                cliente = Clientes.lista_clientes.pop(i)
                 return cliente
