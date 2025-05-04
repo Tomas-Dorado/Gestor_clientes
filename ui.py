@@ -7,7 +7,7 @@ class MainWindow(Tk):
         self.build()
         
     def build(self):
-        button= Button(self.root, text="Hola", command=self.Hola)
+        button= Button(self, text="Hola", command=self.Hola)
         button.pack()
 
     def Hola(self):
