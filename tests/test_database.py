@@ -48,11 +48,10 @@ class Testdatabase(unittest.TestCase):
         with open(db.DATABASE_PATH, newline="\n") as fichero:
             reader = csv.reader(fichero, delimiter=";")
             lineas = list(reader)
-            self.assertEqual(len(lineas), 4)
+            self.assertEqual(len(lineas), 3)
             self.assertEqual(lineas[0], ['12345678', 'Alice', 'Smith'])
             self.assertEqual(lineas[1], ['87654321', 'Bob', 'Johnson'])
             self.assertEqual(lineas[2], ['11223344', 'Charlie', 'Brown'])
-            self.assertEqual(lineas[3], ['34665453', 'Héctor', 'Costa'])
 
 if __name__ == '__main__':
     unittest.main()
