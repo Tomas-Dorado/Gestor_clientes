@@ -1,6 +1,7 @@
 #Este archivo es el que se encarga de la base de datos
 import csv
 from .config import DATABASE_PATH
+from Nodo import Nodo, ListaEnlazada
 
 class Cliente:
     def __init__(self, nombre, apellido, dni):
@@ -13,7 +14,7 @@ class Cliente:
     
 class Clientes:
     #Lista clientes
-    lista_clientes = []
+    lista_clientes = ListaEnlazada()
     with open(DATABASE_PATH, newline="\n") as fichero:
         reader = csv.reader(fichero, delimiter=";")
         for dni, nombre, apellido in reader:
