@@ -22,7 +22,7 @@ class Clientes:
     @staticmethod
     def crear(nombre, apellido, dni):
         cliente = Cliente(nombre, apellido, dni)
-        Cliente.lista_clientes.append(cliente)
+        Clientes.lista_clientes.append(cliente)
         return cliente
     
     @staticmethod
