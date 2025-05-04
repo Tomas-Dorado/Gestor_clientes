@@ -1,7 +1,10 @@
+import re
 from tkinter import *
 from tkinter import ttk
 from tkinter.messagebox import askokcancel, WARNING
 from Gestor_Clientes import database as db
+from Gestor_Clientes import helpers
+
 
 class CenterWidgetMixin: 
     def center(self):  # Quita la coma extra
@@ -88,8 +91,98 @@ class MainWindow(Tk, CenterWidgetMixin):
         if self.treeview.focus():  # Solo si hay un cliente seleccionado
             EditClientWindow(self)
             
+class CreateClientWindow(Toplevel, CenterWidgetMixin): 
+    def __init__(self, parent): 
+        super().__init__(parent) 
+        self.title('Crear cliente') 
+        self.build() 
+        self.center() 
+        self.transient(parent)
+        self.grab_set()
 
+    def build(self): 
+        # Top frame 
+        frame = Frame(self) 
+        frame.pack(padx=20, pady=10) 
 
+        # Labels 
+        Label(frame, text="DNI (2 números y 1 letra)").grid(row=0, column=0) 
+        Label(frame, text="Nombre (2 a 30 chars)").grid(row=0, column=1) 
+        Label(frame, text="Apellido (2 a 30 chars)").grid(row=0, column=2) 
+
+        # Entries (¡convertirlos en atributos de clase!)
+        self.dni = Entry(frame) 
+        self.dni.grid(row=1, column=0) 
+        self.dni.bind("<KeyRelease>", lambda ev: self.validate(ev, 0)) 
+        
+        self.nombre = Entry(frame) 
+        self.nombre.grid(row=1, column=1) 
+        self.nombre.bind("<KeyRelease>", lambda ev: self.validate(ev, 1)) 
+        
+        self.apellido = Entry(frame) 
+        self.apellido.grid(row=1, column=2) 
+        self.apellido.bind("<KeyRelease>", lambda ev: self.validate(ev, 2)) 
+
+        # Bottom frame 
+        frame = Frame(self) 
+        frame.pack(pady=10) 
+
+        # Botones (¡definir "crear" antes de asignarlo!)
+        crear = Button(frame, text="Crear", command=self.create_client) 
+        crear.configure(state=NORMAL) 
+        crear.grid(row=0, column=0) 
+        Button(frame, text="Cancelar", command=self.close).grid(row=0, column=1) 
+
+        # Estado de validaciones y exportar botón
+        self.validaciones = [False, False, False] 
+        self.crear = crear
+
+    def dni_valido(dni, lista_clientes):
+        # Formato: 00A
+        if not re.match(r'^\d{2}[A-Z]$', dni):
+            return False
+        
+        # DNI único
+        for cliente in lista_clientes:
+            if cliente.dni == dni:
+                return False
+        return True
+
+     def validate(self, event, index): 
+        valor = event.widget.get()
+        
+        # Convertir DNI a mayúsculas
+        if index == 0:
+            valor = valor.upper()
+            event.widget.delete(0, "end")
+            event.widget.insert(0, valor)
+
+        # Validar DNI (index 0) o campos de texto (index 1 y 2)
+        if index == 0:
+            valido = helpers.dni_valido(valor, db.Clientes.lista)
+        else:
+            valido = valor.isalpha() and 2 <= len(valor) <= 30
+        
+        event.widget.configure({"bg": "Green" if valido else "Red"}) 
+        self.validaciones[index] = valido 
+        self.crear.config(state=NORMAL if all(self.validaciones) else DISABLED)
+
+    def create_client(self): 
+        dni = self.dni.get().upper() 
+        nombre = self.nombre.get().capitalize() 
+        apellido = self.apellido.get().capitalize() 
+        
+        # Añadir a la base de datos 
+        db.Clientes.crear(dni, nombre, apellido)
+        
+        # Actualizar Treeview (forzar refresco)
+        self.master.treeview.insert(
+            "", "end", iid=dni, 
+            values=(dni, nombre, apellido)
+        ) 
+        self.master.treeview.update_idletasks()
+        self.close()
+        
 if __name__ == "__main__":
     app = MainWindow()
     app.mainloop()
