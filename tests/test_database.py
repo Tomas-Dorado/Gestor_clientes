@@ -1,6 +1,7 @@
 import copy
 import unittest
 import helpers
+import csv
 from Gestor_Clientes import database as db
 
 
@@ -41,6 +42,17 @@ class Testdatabase(unittest.TestCase):
         self.assertFalse(helpers.dni_valido('23223S', db.Clientes.lista_clientes))
         self.assertFalse(helpers.dni_valido('F35', db.Clientes.lista_clientes))
         self.assertFalse(helpers.dni_valido('48H', db.Clientes.lista_clientes))
+
+    def test_escritura_csv(self):
+        db.Clientes.guardar()
+        with open(db.DATABASE_PATH, newline="\n") as fichero:
+            reader = csv.reader(fichero, delimiter=";")
+            lineas = list(reader)
+            self.assertEqual(len(lineas), 4)
+            self.assertEqual(lineas[0], ['12345678', 'Alice', 'Smith'])
+            self.assertEqual(lineas[1], ['87654321', 'Bob', 'Johnson'])
+            self.assertEqual(lineas[2], ['11223344', 'Charlie', 'Brown'])
+            self.assertEqual(lineas[3], ['34665453', 'Héctor', 'Costa'])
 
 if __name__ == '__main__':
     unittest.main()
