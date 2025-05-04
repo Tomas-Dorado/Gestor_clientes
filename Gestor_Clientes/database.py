@@ -14,7 +14,7 @@ class Clientes:
     lista_clientes = []
     @staticmethod
     def buscar(dni):
-        for cliente in Cliente.lista_clientes:
+        for cliente in Clientes.lista_clientes:
             if cliente.dni == dni:
                 return cliente
         return None
@@ -27,7 +27,7 @@ class Clientes:
     
     @staticmethod
     def modificar(dni, nombre, apellido):
-        for i, cliente in enumerate(Cliente.lista_clientes):
+        for i, cliente in enumerate(Clientes.lista_clientes):
             if cliente.dni == dni:
                 Clientes.lista_clientes[i].nombre = nombre
                 Clientes.lista_clientes[i].apellido = apellido
