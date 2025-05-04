@@ -1,5 +1,6 @@
 #Este archivo es el que se encarga de la base de datos
 import csv
+from config import DATABASE_PATH
 
 class Cliente:
     def __init__(self, nombre, apellido, dni):
@@ -13,7 +14,7 @@ class Cliente:
 class Clientes:
     #Lista clientes
     lista_clientes = []
-    with open("clientes.csv", newline="\n") as fichero:
+    with open(DATABASE_PATH, newline="\n") as fichero:
         reader = csv.reader(fichero, delimiter=";")
         for dni, nombre, apellido in reader:
             cliente = Cliente(dni, nombre, apellido)
@@ -21,7 +22,7 @@ class Clientes:
 
     @staticmethod
     def guardar():
-        with open("clientes.csv", "w", newline="\n") as fichero:
+        with open(DATABASE_PATH, "w", newline="\n") as fichero:
             writer = csv.writer(fichero, delimiter=";")
             for cliente in Clientes.lista_clientes:
                 writer.writerow([cliente.dni, cliente.nombre, cliente.apellido])
