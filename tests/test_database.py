@@ -1,6 +1,6 @@
 import copy
 import unittest
-import helpers
+import Gestor_Clientes.helpers as helpers
 import csv
 from Gestor_Clientes import database as db
 

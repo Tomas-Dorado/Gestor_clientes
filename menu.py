@@ -1,6 +1,7 @@
 #Este fucheros es el que tendra el menu
-import helpers
+import Gestor_Clientes.helpers as helpers
 from Gestor_Clientes import database as db
+
 helpers.limpiar_pantalla()
 
 def iniciar():
