@@ -27,3 +27,27 @@ Antes de ejecutar el proyecto, asegúrate de tener instaladas las siguientes dep
 ```plaintext
 pytest
 tk
+```
+
+## Diagrama del Proyecto
+
+A continuación, se presenta un diagrama que describe la estructura y el flujo del proyecto:
+
+![Diagrama del Proyecto](diagram.png)
+
+## Cómo Ejecutar
+
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/Tomas-Dorado/Gestor_clientes.git
+   ```
+2. Instala las dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Ejecuta la aplicación:
+   ```bash
+   python main.py
+   ```
+
+¡Disfruta gestionando tus clientes con esta aplicación!
