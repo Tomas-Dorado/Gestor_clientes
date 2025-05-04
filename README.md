@@ -33,7 +33,7 @@ tk
 
 A continuación, se presenta un diagrama que describe la estructura y el flujo del proyecto:
 
-![Diagrama del Proyecto](diagram.png)
+![Diagrama del Proyecto](diagram (4).png)
 
 ## Cómo Ejecutar
 
